@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -5,23 +7,32 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import SearchItem from "../feature/search-item";
 import { navLinks } from "@/lib/contants";
+import { useRouter } from "next/navigation";
+import MobileToggle from "../feature/mobile-toggle";
 
 const Header = () => {
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.push("/login")
+  }
   return (
     <header className="w-full px-8 flex flex-col items-center bg-zinc-50 box-border shadow-xl">
       <div className="py-4 w-full flex items-center justify-between">
         <Link href="/" className="flex items-center justify-center">
           <Image
-            src="/logo.png"
+            src="/Logo1.png"
             alt="LocalBazaar Logo"
             width={160}
             height={200}
             className="object-contain"
           />
         </Link>
+        <MobileToggle clickHandler={handleClick} />
         <Button
+          onClick={handleClick}
           variant="secondary"
-          className="bg-black text-white hover:text-black"
+          className="bg-black text-white hover:text-black hidden md:block"
         >
           Login
         </Button>
@@ -30,7 +41,7 @@ const Header = () => {
       <nav className="flex items-center justify-between py-3 w-full">
         <SearchItem />
 
-        <div className="flex items-center justify-between pr-3 text-center">
+        <div className="md:flex items-center justify-between pr-3 text-center hidden">
           {navLinks.map((link, index) => (
             <Link
               href={link.url}
